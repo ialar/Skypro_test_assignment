@@ -1,0 +1,155 @@
+[
+{
+    "model": "chain.networklink",
+    "pk": 1,
+    "fields": {
+        "name": "Завод Электроник",
+        "network_type": "factory",
+        "email": "factory@example.ru",
+        "country": "Россия",
+        "city": "Москва",
+        "street": "Тверская",
+        "house_number": "1",
+        "supplier": null,
+        "debt_to_supplier": "0.00",
+        "created_at": "2024-12-25T19:51:48.186Z"
+    }
+},
+{
+    "model": "chain.networklink",
+    "pk": 2,
+    "fields": {
+        "name": "ТехноМаркет",
+        "network_type": "retail",
+        "email": "market@example.ru",
+        "country": "Россия",
+        "city": "Санкт-Петербург",
+        "street": "Невский проспект",
+        "house_number": "10",
+        "supplier": 1,
+        "debt_to_supplier": "123.45",
+        "created_at": "2024-12-25T20:14:55.716Z"
+    }
+},
+{
+    "model": "chain.networklink",
+    "pk": 3,
+    "fields": {
+        "name": "Мир Техники",
+        "network_type": "retail",
+        "email": "contact@mirt.com",
+        "country": "Россия",
+        "city": "Нижний Новгород",
+        "street": "Печорская улица",
+        "house_number": "8",
+        "supplier": 2,
+        "debt_to_supplier": "0.00",
+        "created_at": "2024-12-27T19:32:18.505Z"
+    }
+},
+{
+    "model": "chain.networklink",
+    "pk": 4,
+    "fields": {
+        "name": "NEO",
+        "network_type": "individual",
+        "email": "neo@bk.ru",
+        "country": "Россия",
+        "city": "Москва",
+        "street": "Верная улица",
+        "house_number": "121",
+        "supplier": 3,
+        "debt_to_supplier": "0.00",
+        "created_at": "2024-12-27T20:00:21.993Z"
+    }
+},
+{
+    "model": "chain.networklink",
+    "pk": 5,
+    "fields": {
+        "name": "Matrix",
+        "network_type": "individual",
+        "email": "matrix@gmail.com",
+        "country": "USA",
+        "city": "New York",
+        "street": "Main street",
+        "house_number": "122",
+        "supplier": 1,
+        "debt_to_supplier": "0.00",
+        "created_at": "2024-12-27T21:46:50.819Z"
+    }
+},
+{
+    "model": "chain.networklink",
+    "pk": 6,
+    "fields": {
+        "name": "NoApple",
+        "network_type": "retail",
+        "email": "no_apple@gmail.com",
+        "country": "USA",
+        "city": "Ozark",
+        "street": "Green street",
+        "house_number": "321",
+        "supplier": null,
+        "debt_to_supplier": "0.00",
+        "created_at": "2024-12-28T08:49:33.102Z"
+    }
+},
+{
+    "model": "chain.networklink",
+    "pk": 8,
+    "fields": {
+        "name": "test_to_delete",
+        "network_type": "retail",
+        "email": "test@gmail.com",
+        "country": "UK",
+        "city": "London",
+        "street": "Baker street",
+        "house_number": "221b",
+        "supplier": null,
+        "debt_to_supplier": "0.00",
+        "created_at": "2024-12-29T09:35:24.586Z"
+    }
+},
+{
+    "model": "chain.product",
+    "pk": 1,
+    "fields": {
+        "name": "Смартфон Galaxy S22",
+        "model": "SM-G991B",
+        "release_date": "2022-02-25",
+        "network_links": [
+            1,
+            4,
+            3
+        ]
+    }
+},
+{
+    "model": "chain.product",
+    "pk": 2,
+    "fields": {
+        "name": "Ноутбук IdeaPad 3",
+        "model": "81W1000",
+        "release_date": "2021-10-10",
+        "network_links": [
+            1,
+            3
+        ]
+    }
+},
+{
+    "model": "chain.product",
+    "pk": 3,
+    "fields": {
+        "name": "Планшет iPad Air",
+        "model": "A2316",
+        "release_date": "2020-10-01",
+        "network_links": [
+            1,
+            2,
+            5
+        ]
+    }
+}
+]
