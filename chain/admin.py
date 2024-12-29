@@ -53,13 +53,34 @@ class NetworkLinkAdmin(admin.ModelAdmin):
     view_products_link.short_description = "Продукты"
 
     def supplier_link(self, obj):
-        """Возвращает ссылку на поставщика звена сети"""
+        """Возвращает ссылку на поставщика звена сети, если такой есть"""
         if obj.supplier:
             url = reverse("admin:chain_networklink_change", args=[obj.supplier.id])
             return format_html('<a href="{}">{}</a>', url, obj.supplier.name)
         return "Нет поставщика"
 
     supplier_link.short_description = "Поставщик"
+
+    def get_fieldsets(self, request, obj=None):
+        """Добавляет ссылку на поставщика на странице объекта сети"""
+        fieldsets = super().get_fieldsets(request, obj)
+        if obj and obj.supplier:
+            supplier_url = reverse(
+                "admin:chain_networklink_change", args=[obj.supplier.id]
+            )
+            supplier_link_html = format_html(
+                '<a href="{}">{}</a>', supplier_url, obj.supplier.name
+            )
+            # Добавляем ссылку в заголовок первого fieldset'а или создаем новый
+            if fieldsets:
+                fieldsets[0] = (
+                    fieldsets[0][0],
+                    {
+                        **fieldsets[0][1],
+                        "description": f"Ссылка на поставщика: {supplier_link_html}",
+                    },
+                )
+        return fieldsets
 
 
 class ProductAdminForm(forms.ModelForm):
