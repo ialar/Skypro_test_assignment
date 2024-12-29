@@ -12,7 +12,6 @@
 
 ### Требования
 - [Python](https://www.python.org/downloads/)
-- [PyCharm](https://www.jetbrains.com/pycharm/download/)
 - [Django](https://www.djangoproject.com/download/)
 - [Django REST Framework](https://www.django-rest-framework.org/)
 - [PostgreSQL](https://www.postgresql.org/download/)
