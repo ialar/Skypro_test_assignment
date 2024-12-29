@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "users",
     "chain",
+    "drf_yasg",
 ]
 
 MIDDLEWARE = [
