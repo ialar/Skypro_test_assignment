@@ -6,6 +6,7 @@
 [![Django REST](https://img.shields.io/badge/DJANGO-REST-ff1709?style=for-the-badge&logo=django&logoColor=white&color=ff1709&labelColor=gray)](https://www.django-rest-framework.org/)
 [![GitHub Actions](https://img.shields.io/badge/github%20actions-%232671E5.svg?style=for-the-badge&logo=githubactions&logoColor=white)](https://docs.github.com/en/actions)
 [![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/docs/)
+[![Postman](https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white)](https://www.postman.com/)
 
 ## Backend part of online platform for electronics retail chain with API and admin panel
 Приложение реализует онлайн-платформу торговой сети по продаже электроники с API-интерфейсом и админ-панелью.
@@ -30,7 +31,7 @@ cd Skypro_test_assignment
 pip install -r requirements.txt
 ```
 4. Воспользуйтесь шаблоном .env.sample для создания файла `.env`.
-5. Создайте БД, примените миграции и загрузите необходимые данные с помощью фикстур (.\fixtures\):
+5. Создайте БД, примените миграции и загрузите демо-данные с помощью фикстур (.\fixtures\):
 ```
 psql -U postgres  
 postgres=# CREATE DATABASE <db_name>;
@@ -40,7 +41,7 @@ postgres=# \q
 ```
 python manage.py loaddata fixtures/<name>.json
 ```
-6. Чтобы создать суперпользователя, выполните команду:
+6. Чтобы создать своего суперпользователя, можете воспользоваться командой, изменив логин и пароль в файле csu.py:
 ```
 python manage.py csu
 ```
