@@ -3,27 +3,25 @@ from django.contrib import admin
 from django.urls import reverse
 from django.utils.html import format_html
 
-from .models import NetworkLink, Product
+from chain.models import NetworkLink, Product, Address
 
 
 @admin.register(NetworkLink)
 class NetworkLinkAdmin(admin.ModelAdmin):
+    """Админ-панель для модели NetworkLink"""
     list_display = (
         "id",
         "name",
         "network_type",
         "level",
         "email",
-        "country",
-        "city",
-        "street",
-        "house_number",
+        "address",
         "debt_to_supplier",
         "supplier_link",
         "product_count",
         "view_products_link",
     )
-    list_filter = ("city",)  # Фильтр по названию города
+    list_filter = ("address__city",)  # Фильтр по названию города
     actions = ["clear_debt"]  # Добавляем admin action для очистки задолженности
 
     def clear_debt(self, request, queryset):
@@ -96,6 +94,7 @@ class ProductAdminForm(forms.ModelForm):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
+    """Админ-панель для модели Product"""
     form = ProductAdminForm
     list_display = ("name", "model", "release_date", "get_network_links")
     list_filter = ("name", "release_date")
@@ -110,3 +109,11 @@ class ProductAdmin(admin.ModelAdmin):
         )  # Выводим связанные с продуктом звенья сети
 
     get_network_links.short_description = "Звенья сети"
+
+
+@admin.register(Address)
+class AddressAdmin(admin.ModelAdmin):
+    """Админ-панель для модели Address"""
+    list_display = ("country", "city", "street", "house_number")
+    list_filter = ("country", "city", "street")
+    search_fields = ("country", "city", "street", "house_number")

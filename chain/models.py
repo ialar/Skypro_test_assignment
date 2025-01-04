@@ -5,6 +5,20 @@ from django.db import models
 NULLABLE = {"null": True, "blank": True}
 
 
+class Address(models.Model):
+    country = models.CharField(max_length=100, verbose_name="Страна")
+    city = models.CharField(max_length=100, verbose_name="Город")
+    street = models.CharField(max_length=255, verbose_name="Улица")
+    house_number = models.CharField(max_length=10, verbose_name="Номер дома")
+
+    def __str__(self):
+        return f"{self.country}, {self.city}, {self.street} {self.house_number}"
+
+    class Meta:
+        verbose_name = "Адрес"
+        verbose_name_plural = "Адреса"
+
+
 class NetworkLink(models.Model):
     TYPE_CHOICES = [
         ("factory", "Завод"),
@@ -25,10 +39,7 @@ class NetworkLink(models.Model):
 
     # Контакты
     email = models.EmailField(unique=True, verbose_name="Почта")
-    country = models.CharField(max_length=100, verbose_name="Страна")
-    city = models.CharField(max_length=100, verbose_name="Город")
-    street = models.CharField(max_length=255, verbose_name="Улица")
-    house_number = models.CharField(max_length=10, verbose_name="Номер дома")
+    address = models.ForeignKey(Address, on_delete=models.CASCADE, verbose_name="Адрес", **NULLABLE)
 
     # Поставщик (самоссылка)
     supplier = models.ForeignKey(
