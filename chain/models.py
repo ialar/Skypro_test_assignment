@@ -39,7 +39,9 @@ class NetworkLink(models.Model):
 
     # Контакты
     email = models.EmailField(unique=True, verbose_name="Почта")
-    address = models.ForeignKey(Address, on_delete=models.CASCADE, verbose_name="Адрес", **NULLABLE)
+    address = models.ForeignKey(
+        Address, on_delete=models.CASCADE, verbose_name="Адрес", **NULLABLE
+    )
 
     # Поставщик (самоссылка)
     supplier = models.ForeignKey(

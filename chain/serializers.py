@@ -1,14 +1,14 @@
 from rest_framework.exceptions import ValidationError
 from rest_framework.serializers import ModelSerializer
 
-from chain.models import NetworkLink, Product, Address
+from chain.models import Address, NetworkLink, Product
 from chain.validators import validate_debt_update
 
 
 class AddressSerializer(ModelSerializer):
     class Meta:
         model = Address
-        fields = ['country', 'city', 'street', 'house_number']
+        fields = ["country", "city", "street", "house_number"]
 
 
 class ProductSerializer(ModelSerializer):

@@ -3,12 +3,13 @@ from django.contrib import admin
 from django.urls import reverse
 from django.utils.html import format_html
 
-from chain.models import NetworkLink, Product, Address
+from chain.models import Address, NetworkLink, Product
 
 
 @admin.register(NetworkLink)
 class NetworkLinkAdmin(admin.ModelAdmin):
     """Админ-панель для модели NetworkLink"""
+
     list_display = (
         "id",
         "name",
@@ -95,6 +96,7 @@ class ProductAdminForm(forms.ModelForm):
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     """Админ-панель для модели Product"""
+
     form = ProductAdminForm
     list_display = ("name", "model", "release_date", "get_network_links")
     list_filter = ("name", "release_date")
@@ -114,6 +116,7 @@ class ProductAdmin(admin.ModelAdmin):
 @admin.register(Address)
 class AddressAdmin(admin.ModelAdmin):
     """Админ-панель для модели Address"""
+
     list_display = ("id", "country", "city", "street", "house_number")
     list_filter = ("country", "city", "street")
     search_fields = ("country", "city", "street", "house_number")

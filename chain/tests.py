@@ -3,7 +3,7 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
 
-from chain.models import NetworkLink, Address, Product
+from chain.models import Address, NetworkLink, Product
 from users.models import User
 
 
@@ -95,7 +95,7 @@ class NetworkLinkTest(APITestCase):
                 "city": "New City",
                 "street": "New Street",
                 "house_number": "2B",
-            }
+            },
         }
         response = self.client.post(self.url, data, format="json")
         # print(response.content)

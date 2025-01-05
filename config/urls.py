@@ -21,5 +21,5 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("users/", include("users.urls", namespace="users")),
     path("chain/", include("chain.urls", namespace="chain")),
-    path("redoc/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc")
+    path("redoc/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
 ]
