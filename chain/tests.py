@@ -3,7 +3,7 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
 
-from chain.models import NetworkLink
+from chain.models import NetworkLink, Address, Product
 from users.models import User
 
 
@@ -11,15 +11,24 @@ class NetworkLinkTest(APITestCase):
     def setUp(self):
         self.user = User.objects.create(email="test@test.com", is_active=True)
         self.client.force_authenticate(user=self.user)
-        self.network_link = NetworkLink.objects.create(
-            name="Test Link",
-            email="test@example.com",
+        self.address = Address.objects.create(
             country="Test Country",
             city="Test City",
             street="Test Street",
             house_number="1A",
+        )
+        self.product = Product.objects.create(
+            name="Test Product",
+            model="Test Model",
+            release_date="2020-10-01",
+        )
+        self.network_link = NetworkLink.objects.create(
+            name="Test Link",
+            email="test@example.com",
+            address=self.address,
             debt_to_supplier=0.00,
         )
+        self.network_link.products.add(self.product)
         self.url = reverse("chain:network_link-list")
         self.detail_url = reverse(
             "chain:network_link-detail", args=[self.network_link.id]
@@ -29,10 +38,10 @@ class NetworkLinkTest(APITestCase):
         """Тестируем создание экземпляра звена сети."""
         self.assertEqual(self.network_link.name, "Test Link")
         self.assertEqual(self.network_link.email, "test@example.com")
-        self.assertEqual(self.network_link.country, "Test Country")
-        self.assertEqual(self.network_link.city, "Test City")
-        self.assertEqual(self.network_link.street, "Test Street")
-        self.assertEqual(self.network_link.house_number, "1A")
+        self.assertEqual(self.network_link.address.country, "Test Country")
+        self.assertEqual(self.network_link.address.city, "Test City")
+        self.assertEqual(self.network_link.address.street, "Test Street")
+        self.assertEqual(self.network_link.address.house_number, "1A")
         self.assertEqual(self.network_link.debt_to_supplier, 0.00)
 
     def test_negative_debt_validation(self):
@@ -58,13 +67,15 @@ class NetworkLinkTest(APITestCase):
         data = {
             "name": "New Link",
             "email": "new@example.com",
-            "country": "New Country",
-            "city": "New City",
-            "street": "New Street",
-            "house_number": "2B",
+            "address": {
+                "country": "New Country",
+                "city": "New City",
+                "street": "New Street",
+                "house_number": "2B",
+            },
             "debt_to_supplier": 100.00,
         }
-        response = self.client.post(self.url, data)
+        response = self.client.post(self.url, data, format="json")
 
         # Проверяем, что запрос завершился с ошибкой валидации
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
@@ -79,12 +90,15 @@ class NetworkLinkTest(APITestCase):
         data = {
             "name": "New Link",
             "email": "new@example.com",
-            "country": "New Country",
-            "city": "New City",
-            "street": "New Street",
-            "house_number": "2B",
+            "address": {
+                "country": "New Country",
+                "city": "New City",
+                "street": "New Street",
+                "house_number": "2B",
+            }
         }
-        response = self.client.post(self.url, data)
+        response = self.client.post(self.url, data, format="json")
+        # print(response.content)
 
         # Проверяем, что объект создан успешно
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -99,25 +113,28 @@ class NetworkLinkTest(APITestCase):
 
     def test_update_network_link(self):
         """Тестируем обновление существующего звена сети."""
-        data = {
-            "name": "Updated Link",
-            "email": "updated@example.com",
+        address_data = {
             "country": "Updated Country",
             "city": "Updated City",
             "street": "Updated Street",
             "house_number": "1B",
         }
-        response = self.client.put(self.detail_url, data)
+        data = {
+            "name": "Updated Link",
+            "email": "updated@example.com",
+            "address": address_data,
+        }
+        response = self.client.put(self.detail_url, data, format="json")
 
         # Проверяем, что запрос обновления прошел успешно
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.network_link.refresh_from_db()  # Обновляем объект из базы данных
         self.assertEqual(self.network_link.name, "Updated Link")
         self.assertEqual(self.network_link.email, "updated@example.com")
-        self.assertEqual(self.network_link.country, "Updated Country")
-        self.assertEqual(self.network_link.city, "Updated City")
-        self.assertEqual(self.network_link.street, "Updated Street")
-        self.assertEqual(self.network_link.house_number, "1B")
+        self.assertEqual(self.network_link.address.country, "Updated Country")
+        self.assertEqual(self.network_link.address.city, "Updated City")
+        self.assertEqual(self.network_link.address.street, "Updated Street")
+        self.assertEqual(self.network_link.address.house_number, "1B")
 
     def test_update_debt_to_supplier_field(self):
         """Тестируем обновление поля задолженности."""

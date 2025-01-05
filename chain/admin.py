@@ -114,6 +114,6 @@ class ProductAdmin(admin.ModelAdmin):
 @admin.register(Address)
 class AddressAdmin(admin.ModelAdmin):
     """Админ-панель для модели Address"""
-    list_display = ("country", "city", "street", "house_number")
+    list_display = ("id", "country", "city", "street", "house_number")
     list_filter = ("country", "city", "street")
     search_fields = ("country", "city", "street", "house_number")

@@ -1,3 +1,4 @@
+from rest_framework.exceptions import ValidationError
 from rest_framework.serializers import ModelSerializer
 
 from chain.models import NetworkLink, Product, Address
@@ -34,17 +35,40 @@ class NetworkLinkSerializer(ModelSerializer):
             "created_at",
             "products",
         ]
-        # Если не хотим явно сообщать о запрете обновления, можно определить поле только на чтение
-        # read_only_fields = ["debt_to_supplier"]
+        read_only_fields = ["products"]
+
+    def create(self, validated_data):
+        address_data = validated_data.pop("address")
+        address = Address.objects.create(**address_data)
+        products_data = validated_data.pop("products", [])
+
+        instance = NetworkLink.objects.create(address=address, **validated_data)
+        instance.products.set(products_data)
+        return instance
+
+    def update(self, instance, validated_data):
+        address_data = validated_data.pop("address")
+        address = instance.address
+        address.country = address_data.get("country", address.country)
+        address.city = address_data.get("city", address.city)
+        address.street = address_data.get("street", address.street)
+        address.house_number = address_data.get("house_number", address.house_number)
+        address.save()
+
+        products_data = validated_data.pop("products", None)
+        if products_data is not None:
+            if not products_data:
+                raise ValidationError({"products": "This field cannot be empty"})
+            instance.products.clear()
+            instance.products.add(*products_data)
+
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        instance.save()
+
+        return instance
 
     def validate(self, attrs):
         # Проверяем обновление поля задолженности
         validate_debt_update(attrs)
         return attrs
-
-    def update(self, instance, validated_data):
-        # Обновляем остальные поля и сохраняем изменения
-        for attr, value in validated_data.items():
-            setattr(instance, attr, value)
-        instance.save()
-        return instance
