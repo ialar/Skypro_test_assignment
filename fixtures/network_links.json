@@ -1,15 +1,52 @@
 [
 {
+    "model": "chain.address",
+    "pk": 1,
+    "fields": {
+        "country": "Россия",
+        "city": "Москва",
+        "street": "Печорская улица",
+        "house_number": "11"
+    }
+},
+{
+    "model": "chain.address",
+    "pk": 2,
+    "fields": {
+        "country": "USA",
+        "city": "New York",
+        "street": "Main street",
+        "house_number": "99"
+    }
+},
+{
+    "model": "chain.address",
+    "pk": 3,
+    "fields": {
+        "country": "Россия",
+        "city": "Нижний Новгород",
+        "street": "Тверская",
+        "house_number": "1"
+    }
+},
+{
+    "model": "chain.address",
+    "pk": 4,
+    "fields": {
+        "country": "Россия",
+        "city": "Москва",
+        "street": "Ленина",
+        "house_number": "50"
+    }
+},
+{
     "model": "chain.networklink",
     "pk": 1,
     "fields": {
         "name": "Завод Электроник",
         "network_type": "factory",
         "email": "factory@example.ru",
-        "country": "Россия",
-        "city": "Москва",
-        "street": "Тверская",
-        "house_number": "1",
+        "address": 4,
         "supplier": null,
         "debt_to_supplier": "0.00",
         "created_at": "2024-12-25T19:51:48.186Z"
@@ -22,12 +59,9 @@
         "name": "ТехноМаркет",
         "network_type": "retail",
         "email": "market@example.ru",
-        "country": "Россия",
-        "city": "Санкт-Петербург",
-        "street": "Невский проспект",
-        "house_number": "10",
+        "address": 1,
         "supplier": 1,
-        "debt_to_supplier": "123.45",
+        "debt_to_supplier": "0.00",
         "created_at": "2024-12-25T20:14:55.716Z"
     }
 },
@@ -38,10 +72,7 @@
         "name": "Мир Техники",
         "network_type": "retail",
         "email": "contact@mirt.com",
-        "country": "Россия",
-        "city": "Нижний Новгород",
-        "street": "Печорская улица",
-        "house_number": "8",
+        "address": 3,
         "supplier": 2,
         "debt_to_supplier": "0.00",
         "created_at": "2024-12-27T19:32:18.505Z"
@@ -54,12 +85,9 @@
         "name": "NEO",
         "network_type": "individual",
         "email": "neo@bk.ru",
-        "country": "Россия",
-        "city": "Москва",
-        "street": "Верная улица",
-        "house_number": "121",
+        "address": null,
         "supplier": 3,
-        "debt_to_supplier": "0.00",
+        "debt_to_supplier": "0.15",
         "created_at": "2024-12-27T20:00:21.993Z"
     }
 },
@@ -70,10 +98,7 @@
         "name": "Matrix",
         "network_type": "individual",
         "email": "matrix@gmail.com",
-        "country": "USA",
-        "city": "New York",
-        "street": "Main street",
-        "house_number": "122",
+        "address": null,
         "supplier": 1,
         "debt_to_supplier": "0.00",
         "created_at": "2024-12-27T21:46:50.819Z"
@@ -86,10 +111,7 @@
         "name": "NoApple",
         "network_type": "retail",
         "email": "no_apple@gmail.com",
-        "country": "USA",
-        "city": "Ozark",
-        "street": "Green street",
-        "house_number": "321",
+        "address": 2,
         "supplier": null,
         "debt_to_supplier": "0.00",
         "created_at": "2024-12-28T08:49:33.102Z"
@@ -102,10 +124,7 @@
         "name": "test_to_delete",
         "network_type": "retail",
         "email": "test@gmail.com",
-        "country": "UK",
-        "city": "London",
-        "street": "Baker street",
-        "house_number": "221b",
+        "address": null,
         "supplier": null,
         "debt_to_supplier": "0.00",
         "created_at": "2024-12-29T09:35:24.586Z"
