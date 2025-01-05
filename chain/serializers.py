@@ -1,7 +1,13 @@
 from rest_framework.serializers import ModelSerializer
 
-from chain.models import NetworkLink, Product
+from chain.models import NetworkLink, Product, Address
 from chain.validators import validate_debt_update
+
+
+class AddressSerializer(ModelSerializer):
+    class Meta:
+        model = Address
+        fields = ['country', 'city', 'street', 'house_number']
 
 
 class ProductSerializer(ModelSerializer):
@@ -12,6 +18,7 @@ class ProductSerializer(ModelSerializer):
 
 class NetworkLinkSerializer(ModelSerializer):
     products = ProductSerializer(many=True, read_only=True)
+    address = AddressSerializer()
 
     class Meta:
         model = NetworkLink
@@ -21,10 +28,7 @@ class NetworkLinkSerializer(ModelSerializer):
             "network_type",
             "level",
             "email",
-            "country",
-            "city",
-            "street",
-            "house_number",
+            "address",
             "supplier",
             "debt_to_supplier",
             "created_at",
